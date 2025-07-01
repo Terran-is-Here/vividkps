@@ -2,6 +2,7 @@
 import tkinter as tk
 import PIL
 import tkextrafont
+import os
 import PIL.ImageTk
 import PIL.Image
 import keyboard
@@ -15,6 +16,11 @@ from ctypes import windll
 Image_Mode_Flag = True
 Disable_Topbar_Flag = True
 
+### Helper function for local file addresses 
+def local_file_address(filename): 
+    directory = os.path.dirname(__file__) #gets parent directory of script
+    return directory + "\\" + filename
+
 ###Tkinter Definition
 window = tk.Tk()
 window.title("vivid/kps")
@@ -22,7 +28,7 @@ window.resizable(width=False,height=False)
 window.config(bg="black")
 window.attributes("-topmost", True)
 ### Custom Font
-custom_font = tkextrafont.Font(file="Python\\vividkps\\monaco-9.ttf",family="Monaco 9")
+custom_font = tkextrafont.Font(file=local_file_address('monaco-9.ttf'),family="Monaco 9")
 
 # Image Path Configuration
 # expected to be PIL images from the getgo. 
@@ -32,13 +38,13 @@ class Image_Paths:
     # note that python escapes backslashes (\), so you need two like this \\ to properly make it work
     #if you want to add more images, without knowing what this does
     # just do PIL.Image.open(f"{image_folder}filenamehere"")
-    image_folder = "Python\\vividkps\\"
+    image_folder = ""
     def Path_to_Pil(path): 
         return PIL.ImageTk.PhotoImage(PIL.Image.open(path).resize((130,130),1))
-    image1_idle = Path_to_Pil(f"{image_folder}smart_shit.jpg")
-    image1_pressed = Path_to_Pil(f"{image_folder}smart_fuck.jpg")
-    image2_idle = Path_to_Pil(f"{image_folder}stupid_shit.jpg")
-    image2_pressed = Path_to_Pil(f"{image_folder}stupid_fuck.jpg")
+    image1_idle = Path_to_Pil(local_file_address(f"{image_folder}smart_shit.jpg"))
+    image1_pressed = Path_to_Pil(local_file_address(f"{image_folder}smart_fuck.jpg"))
+    image2_idle = Path_to_Pil(local_file_address(f"{image_folder}stupid_shit.jpg"))
+    image2_pressed = Path_to_Pil(local_file_address(f"{image_folder}stupid_fuck.jpg"))
 ## Image Definition Function
 def Image_Discrimination(key_index, pressed_state): 
     ## Manually set these when pertaining to Image_Paths. 
